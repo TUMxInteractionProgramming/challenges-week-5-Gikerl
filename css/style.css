@@ -21,9 +21,45 @@ body {
     background-color: #F5F5F5;
 }
 
-button, strong {
+strong {
     text-transform: uppercase;
 }
+
+button {
+    height: 36px;
+    min-width: 88px;
+    font-size: 14px;
+    padding-right: 16px;
+    padding-left: 16px;
+    margin: 8px;
+    border-radius: 2px;
+    border: none;
+    text-transform: uppercase;
+}
+
+.button_primary {
+    color: white;
+    background-color: #3F51B5
+}
+
+.button_accent {
+    color: black;
+    background-color: #CDDC39;
+}
+
+button:focus {
+    outline: 0;
+}
+
+.shadow--2dp {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.shadow--24dp {
+    box-shadow: 0 9px 46px 8px rgba(0, 0, 0, 0.14), 0 11px 15px -7px rgba(0, 0, 0, 0.12), 0 24px 38px 3px rgba(0, 0, 0, 0.2);
+}
+
+
 
 /* LAYOUT */
 
@@ -32,7 +68,8 @@ button, strong {
     height: 100%;
     width: 40%;
 
-    background-color: #3F51B5; /* temporary background color to see the effect, is completely hidden now */
+    background-color: #3F51B5;
+    /* temporary background color to see the effect, is completely hidden now */
 }
 
 #chat {
@@ -66,7 +103,8 @@ h1 {
     padding: 24px 16px 20px 16px;
 
     /* MOOCUS image alignment */
-    position: relative; /* we need this, so that the image's absolute position is relative to the app bar */
+    position: relative;
+    /* we need this, so that the image's absolute position is relative to the app bar */
 }
 
 h1#left-app-bar {
@@ -85,10 +123,10 @@ h1 a {
 
 h1 i {
     /* #7 #icns #str  */
-    position:absolute;
+    position: absolute;
     right: 16px;
     /* #7 #icns #small adjust icon size */
-    font-size:24px;
+    font-size: 24px;
 }
 
 /* CHANNELS LIST */
@@ -98,9 +136,12 @@ ul {
     background-color: white;
     position: absolute;
     width: 100%;
-    top: 64px; /* the app bar's height */
-    bottom: 72px; /* the tab bar's height */
-    overflow-y: auto; /* this adds scroll bars on demand */
+    top: 64px;
+    /* the app bar's height */
+    bottom: 72px;
+    /* the tab bar's height */
+    overflow-y: auto;
+    /* this adds scroll bars on demand */
 }
 
 li {
@@ -119,7 +160,7 @@ li .channel-meta {
     top: 12px;
 
     /* #8 #channel #centered blue boxes */
-    display:flex;
+    display: flex;
 }
 
 li .channel-meta span {
@@ -128,13 +169,13 @@ li .channel-meta span {
     background-color: #3F51B5;
     color: white;
     /* appearance */
-    margin:2px;
-    padding:2px;
-    border-radius:2px;
-    font-size:10px;
+    margin: 2px;
+    padding: 2px;
+    border-radius: 2px;
+    font-size: 10px;
 
     /* #8 #channel #centered blue boxes' text content */
-    align-self:center;
+    align-self: center;
 }
 
 li i.fa {
@@ -148,9 +189,27 @@ li.selected {
     border-left: 4px solid #3F51B5;
 }
 
+.fab {
+   width: 56px;
+   height: 56px;
+   background-color: #CDDC39;
+   border-radius: 50%;
+   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+ 
+   font-size: 24px;
+   color: black;
+   text-align: center;
+   line-height: 56px;
+ 
+   position: absolute;
+   right: 16px;
+   bottom: 106px;
+}
+
 /* TAB BAR */
 
-#tab-bar, #chat-bar {
+#tab-bar,
+#chat-bar {
     background-color: white;
     text-align: center;
     position: absolute;
@@ -159,13 +218,11 @@ li.selected {
     display: flex;
 }
 
-#tab-bar button, #chat-bar button {
-    background-color: white;
-    border: none;
-    font-size: 13px;
+#tab-bar button {
     width: 33%;
     height: 72px;
     padding: 16px;
+    background-color: white;
 
     /* flexify the buttons by growing them equally */
     flex-grow: 1;
@@ -197,7 +254,7 @@ li.selected {
 #emojis {
     /* emoji menu */
     /* colors and borders */
-    background-color:white;
+    background-color: white;
     border: 1px solid black;
 
     /* size & alignment */
@@ -218,9 +275,15 @@ li.selected {
 
     /* hide the #smile menu */
     display: none;
+    border: none;
+}
+
+#emojis-button {
+    background-color: #3F51B5;
 }
 
 /* #8 #input #styles for font, border, and alignment */
+
 #chat-bar input {
     /* styles */
     font-size: 16px;
@@ -231,12 +294,27 @@ li.selected {
 
 /* MESSAGES */
 
+.arrow-left::before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 30px 30px 0;
+    border-color: transparent white transparent transparent;
+    position: absolute;
+    left: -30px;
+    top: 24px;
+}
+
 .message {
     width: 80%;
     margin-bottom: 8px;
     margin-left: 2.5%;
+    padding: 2px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
     position: relative;
 }
+
 
 .message h3 {
     /* Message-meta medium-sized text, non-italic */
@@ -271,7 +349,6 @@ li.selected {
 
 .message button {
     /* +5 min. button*/
-    background-color: #CDDC39;
     color: black;
     text-transform: uppercase;
 
@@ -283,4 +360,16 @@ li.selected {
 
 .message.own {
     margin-left: 17.5%;
+}
+
+.arrow-right::before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 0 30px 30px;
+    border-color: transparent blue transparent transparent;
+    position: absolute;
+    left: -30px;
+    top: 24px;
 }
