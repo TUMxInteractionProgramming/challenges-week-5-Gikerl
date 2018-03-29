@@ -190,20 +190,20 @@ li.selected {
 }
 
 .fab {
-   width: 56px;
-   height: 56px;
-   background-color: #CDDC39;
-   border-radius: 50%;
-   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
- 
-   font-size: 24px;
-   color: black;
-   text-align: center;
-   line-height: 56px;
- 
-   position: absolute;
-   right: 16px;
-   bottom: 106px;
+    width: 56px;
+    height: 56px;
+    background-color: #CDDC39;
+    border-radius: 50%;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+
+    font-size: 24px;
+    color: black;
+    text-align: center;
+    line-height: 56px;
+
+    position: absolute;
+    right: 16px;
+    bottom: 106px;
 }
 
 /* TAB BAR */
@@ -216,6 +216,17 @@ li.selected {
     bottom: 0;
     width: 100%;
     display: flex;
+}
+
+#chat-bar2 {
+    background-color: white;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    display: none;
+    
 }
 
 #tab-bar button {
@@ -290,6 +301,14 @@ li.selected {
     border: none;
     /* alignment */
     flex-grow: 1;
+}
+
+#chat-bar2 input {
+    display: inline-block;
+    font-size: 16px;
+    border: none;
+    width: calc(50% - 24px);
+    height: 50px;
 }
 
 /* MESSAGES */

@@ -1,9 +1,18 @@
 /* start the external action and say hello */
+/* #6 start the #external #action and say hello */
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/*jslint devel: true */
+/*jslint browser: true*/
+
 console.log("App is alive");
 
 
 /** #7 #whereami #var create global variable */
 var currentChannel;
+var currentSortOrder = SortCreatedOn;
+var channels = [yummy, sevencontinents, killerapp, firstpersononmars, octoberfest];
 
 /** #7 #star #fix: We simply initialize it with the channel selected by default - sevencontinents */
 currentChannel = sevencontinents;
@@ -21,6 +30,9 @@ var currentLocation = {
  * @param channelObject
  */
 function switchChannel(channelObject) {
+    //Hide NewChannelBar
+    HideCreateNewChannel();
+    
     //Log the channel switch
     console.log("Tuning in to channel", channelObject);
 
@@ -28,11 +40,11 @@ function switchChannel(channelObject) {
     document.getElementById('channel-name').innerHTML = channelObject.name;
 
     //#7 #clob #dgst change the channel location using object property
-    document.getElementById('channel-location').innerHTML = 'by <a href="http://w3w.co/'
-        + channelObject.createdBy
-        + '" target="_blank"><strong>'
-        + channelObject.createdBy
-        + '</strong></a>';
+    document.getElementById('channel-location').innerHTML = 'by <a href="http://w3w.co/' +
+        channelObject.createdBy +
+        '" target="_blank"><strong>' +
+        channelObject.createdBy +
+        '</strong></a>';
 
     /* #7 #clob #trn remove either class */
     $('#chat h1 i').removeClass('fa-star fa-star-o');
@@ -107,6 +119,10 @@ function sendMessage() {
 
     // #8 let's now use the #real message #input
     var message = new Message($('#message').val());
+    var n = $('#message').val().length;
+    if (n === 0) {
+        return;
+    }
     console.log("New message:", message);
 
     // #8 nicer #message #append with jQuery:
@@ -118,6 +134,11 @@ function sendMessage() {
 
     // #8 #clear the #message input
     $('#message').val('');
+
+    var channelMessages = currentChannel.messages;
+    channelMessages.push(createMessageElement(message));
+
+    currentChannel.messageCount = currentChannel.messageCount + 1;
 }
 
 /**
@@ -130,31 +151,40 @@ function createMessageElement(messageObject) {
     var expiresIn = Math.round((messageObject.expiresOn - Date.now()) / 1000 / 60);
 
     // #8 #message #element
-    return '<div class="message'+
+    return '<div class="message' +
         //this dynamically adds the class 'own' (#own) to the #message, based on the
         //ternary operator. We need () in order to not disrupt the return.
         (messageObject.own ? ' own' : '') +
         '">' +
-        '<h3><a href="http://w3w.co/' + messageObject.createdBy + '" target="_blank">'+
+        '<h3><a href="http://w3w.co/' + messageObject.createdBy + '" target="_blank">' +
         '<strong>' + messageObject.createdBy + '</strong></a>' +
         messageObject.createdOn.toLocaleString() +
-        '<em>' + expiresIn+ ' min. left</em></h3>' +
+        '<em>' + expiresIn + ' min. left</em></h3>' +
         '<p>' + messageObject.text + '</p>' +
         '<button class="button_accent">+5 min.</button>' +
         '</div>';
 }
 
 
-function listChannels() {
-    // #8 #channel #onload
-    //$('#channels ul').append("<li>New Channel</li>")
+function listChannels(sortOrder) {
+    currentSortOrder = sortOrder;
+    $('#channels ul').empty();
+    channels = channels.sort(sortOrder);
+    for (var i = 0; i < channels.length; i++) {
+        $(createChannelElement(channels[i])).appendTo('#channels ul');
+    }
+}
 
-    // #8 #channels make five #new channels
-    $('#channels ul').append(createChannelElement(yummy));
-    $('#channels ul').append(createChannelElement(sevencontinents));
-    $('#channels ul').append(createChannelElement(killerapp));
-    $('#channels ul').append(createChannelElement(firstpersononmars));
-    $('#channels ul').append(createChannelElement(octoberfest));
+function SortCreatedOn(a, b) {
+    return (b.createdOn - a.createdOn)
+}
+
+function SortTrending(a, b) {
+    return (b.messageCount - a.messageCount)
+}
+
+function SortFavorites(a, b) {
+    return (b.starred - a.starred)
 }
 
 /**
@@ -173,8 +203,10 @@ function createChannelElement(channelObject) {
      </li>
      */
 
-    // create a channel
-    var channel = $('<li>').text(channelObject.name);
+    // create a channel// create a channel
+    var channel = $('<li>').click(function () {
+        switchChannel(channelObject)
+    }).text(channelObject.name);
 
     // create and append channel meta
     var meta = $('<span>').addClass('channel-meta').appendTo(channel);
@@ -192,4 +224,34 @@ function createChannelElement(channelObject) {
 
     // return the complete channel
     return channel;
+}
+
+function ShowCreateNewChannel() {
+    $('#messages').empty();
+    $('#chat-bar2').css("display", "flex");
+}
+
+function HideCreateNewChannel() {
+    $('#messages').empty();
+    $('#chat-bar2').hide();
+}
+
+function CreateNewChannel() {
+    HideCreateNewChannel();
+    if ($('#channelName').val().length === 0) 
+        {
+            return;
+        }
+    var newChannel = {
+    name: "#"+$('#channelName').val(),
+    createdOn: new Date(),
+    createdBy: currentLocation.what3words,
+    starred: true,
+    expiresIn: 60,
+    messageCount: 0,
+    messages: []
+};
+    channels.push(newChannel);
+    listChannels(currentSortOrder);
+    switchChannel(newChannel)
 }
